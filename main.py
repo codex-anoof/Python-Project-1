@@ -1,48 +1,31 @@
-from rich.console import Console
-from rich.table import Table
-from rich.prompt import Prompt
-from bank_operator import bank_operator
 
-console = Console()
+from bank_operator.bank_operator import create_user, list_users, create_account
 
-
-def menu():
+def main():
     while True:
-        console.clear()
+        print("\n====== PyBank CLI Menu ======")
+        print("1. Create User")
+        print("2. List Users")
+        print("3. Create Bank Account")
+        print("4. Exit")
 
-        table = Table(title="🏦 Bank System Menu", title_style="bold magenta")
+        try:
+            choice = int(input("Enter your choice (1-4): "))
+        except ValueError:
+            print("❌ Invalid input! Please enter a number between 1 and 4.")
+            continue
 
-        table.add_column("Option", style="cyan", justify="center")
-        table.add_column("Description", style="white")
-
-        table.add_row("1", "Create User")
-        table.add_row("2", "List Users")
-        table.add_row("3", "Add Account")
-        table.add_row("4", "Deposit")
-        table.add_row("5", "Withdraw")
-        table.add_row("6", "View Transactions")
-        table.add_row("7", "Exit")
-
-        console.print(table)
-
-        choice = Prompt.ask("👉 Choose option", choices=[str(i) for i in range(1, 8)], default="7")
-
-        if choice == '1':
-            bank_operator.create_user()
-        elif choice == '2':
-            bank_operator.list_users()
-        elif choice == '3':
-            bank_operator.create_account()
-        elif choice == '4':
-            bank_operator.deposit_money()
-        elif choice == '5':
-            bank_operator.withdraw_money()
-        elif choice == '6':
-            bank_operator.view_transactions()
-        elif choice == '7':
-            console.print("\n👋 Exiting... Thank you for using the Bank System!", style="bold green")
+        if choice == 1:
+            create_user()
+        elif choice == 2:
+            list_users()
+        elif choice == 3:
+            create_account()
+        elif choice == 4:
+            print("👋 Exiting PyBank CLI. Goodbye!")
             break
-
+        else:
+            print("❌ Invalid option. Please choose from 1 to 4.")
 
 if __name__ == "__main__":
-    menu()
+    main()
